@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.received .card-header {
+    background-color: #f0f8ff;
+    color: #0056b3;
+}
+
+.preparing .card-header {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.completed .card-header {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.order-item button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}

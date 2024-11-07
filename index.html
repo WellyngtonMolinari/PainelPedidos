@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Pedidos</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Painel de Pedidos</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card received" id="received-orders">
+                    <div class="card-header text-center">Pedido Recebido</div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card preparing" id="preparing-orders">
+                    <div class="card-header text-center">Preparando</div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card completed" id="completed-orders">
+                    <div class="card-header text-center">Concluído/Saiu para Entrega</div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    
+    <!-- JavaScript -->
+    <script src="js/scripts.js"></script>
+</body>
+</html>
