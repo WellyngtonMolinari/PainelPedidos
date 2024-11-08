@@ -29,18 +29,28 @@ function fetchOrders() {
 
 // Função para renderizar pedidos
 function renderOrders(orders) {
+    // Limpa o conteúdo das colunas de pedidos antes de renderizar
     document.getElementById("received-orders").querySelector(".card-body").innerHTML = "";
     document.getElementById("preparing-orders").querySelector(".card-body").innerHTML = "";
     document.getElementById("completed-orders").querySelector(".card-body").innerHTML = "";
 
     orders.forEach(order => {
+        // Cria o elemento de exibição do pedido
         const orderEl = document.createElement("div");
         orderEl.classList.add("order-item");
-        orderEl.innerHTML = `<strong>${order.name}</strong><br>Pedido #${order.id}`;
+        orderEl.innerHTML = `
+            <strong>${order.name}</strong><br>
+            Pedido #${order.id}<br>
+            Cliente: ${order.customerNumber || 'N/A'}<br>
+            Detalhes: ${order.message}<br>
+            Hora: ${new Date(order.timestamp).toLocaleString()}
+        `;
 
+        // Cria o botão para atualizar o status do pedido
         const button = document.createElement("button");
         button.classList.add("btn", "btn-sm", "mt-2");
 
+        // Verifica o status do pedido e adiciona ao respectivo painel com o botão correto
         if (order.status === "received") {
             button.textContent = "Preparando";
             button.classList.add("btn-warning");
@@ -54,6 +64,8 @@ function renderOrders(orders) {
         } else if (order.status === "completed") {
             document.getElementById("completed-orders").querySelector(".card-body").appendChild(orderEl);
         }
+
+        // Adiciona o botão ao elemento do pedido
         orderEl.appendChild(button);
     });
 }
