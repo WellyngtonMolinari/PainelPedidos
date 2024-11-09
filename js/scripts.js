@@ -45,7 +45,8 @@ function renderOrders(orders) {
             Pedido #${order.id}<br>
             Total: R$ ${order.total}<br>
             Itens: <ul>${order.itens.map(item => `<li>${item.name} x${item.quantity}</li>`).join('')}</ul><br>
-            Status: ${order.status}
+            Status: ${order.status}<br>
+            📍 Endereço de entrega: ${order.enderecoEntrega}<br>
         `;
 
         const button = document.createElement("button");
@@ -62,7 +63,16 @@ function renderOrders(orders) {
             button.onclick = () => updateOrderStatus(order.id, "Concluído");
             document.getElementById("preparing-orders").querySelector(".card-body").appendChild(orderEl);
         } else if (order.status === "Concluído") {
+            const button = document.createElement("button");
+            // Adicione o botão "Saiu para a Entrega"
+            button.textContent = "Saiu para a Entrega";
+            button.classList.add("btn", "btn-info");
+            button.onclick = () => {
+                updateOrderStatus(order.id, "Saiu para a Entrega");
+                notificarClienteWhatsApp(order.telefoneCliente, `Seu pedido #${order.id} saiu para entrega!`);
+            };
             document.getElementById("completed-orders").querySelector(".card-body").appendChild(orderEl);
+            orderEl.appendChild(button);
         }
 
         orderEl.appendChild(button);
