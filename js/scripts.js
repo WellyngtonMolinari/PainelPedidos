@@ -16,16 +16,18 @@ const db = firebase.database();
 
 // Função para buscar pedidos em tempo real
 function fetchOrders() {
-    db.ref("orders").on("value", (snapshot) => {
+    db.ref("pedidos").on("value", (snapshot) => {
         const orders = [];
         snapshot.forEach((childSnapshot) => {
             const order = childSnapshot.val();
             order.id = childSnapshot.key;
             orders.push(order);
         });
+        console.log("Pedidos recebidos do Firebase:", orders); // Log para verificar os dados
         renderOrders(orders);
     });
 }
+
 
 // Função para renderizar pedidos
 function renderOrders(orders) {
@@ -35,47 +37,48 @@ function renderOrders(orders) {
     document.getElementById("completed-orders").querySelector(".card-body").innerHTML = "";
 
     orders.forEach(order => {
-        // Cria o elemento de exibição do pedido
+        console.log("Renderizando pedido:", order); // Log para verificar cada pedido
         const orderEl = document.createElement("div");
         orderEl.classList.add("order-item");
         orderEl.innerHTML = `
-            <strong>${order.name}</strong><br>
+            <strong>Cliente ID: ${order.clienteId}</strong><br>
             Pedido #${order.id}<br>
-            Cliente: ${order.customerNumber || 'N/A'}<br>
-            Detalhes: ${order.message}<br>
-            Hora: ${new Date(order.timestamp).toLocaleString()}
+            Total: R$ ${order.total}<br>
+            Itens: <ul>${order.itens.map(item => `<li>${item.name} x${item.quantity}</li>`).join('')}</ul><br>
+            Status: ${order.status}
         `;
 
-        // Cria o botão para atualizar o status do pedido
         const button = document.createElement("button");
         button.classList.add("btn", "btn-sm", "mt-2");
 
-        // Verifica o status do pedido e adiciona ao respectivo painel com o botão correto
-        if (order.status === "received") {
+        if (order.status === "Pendente") {
             button.textContent = "Preparando";
             button.classList.add("btn-warning");
-            button.onclick = () => updateOrderStatus(order.id, "preparing");
+            button.onclick = () => updateOrderStatus(order.id, "Preparando");
             document.getElementById("received-orders").querySelector(".card-body").appendChild(orderEl);
-        } else if (order.status === "preparing") {
+        } else if (order.status === "Preparando") {
             button.textContent = "Concluído";
             button.classList.add("btn-success");
-            button.onclick = () => updateOrderStatus(order.id, "completed");
+            button.onclick = () => updateOrderStatus(order.id, "Concluído");
             document.getElementById("preparing-orders").querySelector(".card-body").appendChild(orderEl);
-        } else if (order.status === "completed") {
+        } else if (order.status === "Concluído") {
             document.getElementById("completed-orders").querySelector(".card-body").appendChild(orderEl);
         }
 
-        // Adiciona o botão ao elemento do pedido
         orderEl.appendChild(button);
     });
 }
 
+
 // Função para atualizar o status do pedido no Realtime Database
 function updateOrderStatus(id, newStatus) {
-    db.ref("orders/" + id).update({
+    db.ref("pedidos/" + id).update({
         status: newStatus
     });
 }
 
 // Chama a função para buscar os pedidos em tempo real
-fetchOrders();
+document.addEventListener("DOMContentLoaded", function () {
+    fetchOrders();
+});
+
