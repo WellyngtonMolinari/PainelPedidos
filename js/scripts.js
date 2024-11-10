@@ -38,14 +38,16 @@ function renderOrders(orders) {
 
     orders.forEach(order => {
         console.log("Renderizando pedido:", order); // Log para verificar cada pedido
+        // Tabela do pedido
         const orderEl = document.createElement("div");
         orderEl.classList.add("order-item");
         orderEl.innerHTML = `
-            <strong>Cliente ID: ${order.clienteId}</strong><br>
-            Pedido #${order.id}<br>
+            Cliente: <strong>${order.clienteId}</strong><br>
+            #${order.id}<br>
+            Lanche: <strong><ul>${order.itens.map(item => `<li>x${item.quantity} ${item.name}</li>`).join('')}</ul></strong><br>
             Total: R$ ${order.total}<br>
-            Itens: <ul>${order.itens.map(item => `<li>${item.name} x${item.quantity}</li>`).join('')}</ul><br>
             Status: ${order.status}<br>
+            Criado em: ${order.dataPedido}<br>
             📍 Endereço de entrega: ${order.enderecoEntrega}<br>
         `;
 
