@@ -28,7 +28,6 @@ function fetchOrders() {
     });
 }
 
-
 // Função para renderizar pedidos
 function renderOrders(orders) {
     // Limpa o conteúdo das colunas de pedidos antes de renderizar
@@ -51,46 +50,63 @@ function renderOrders(orders) {
             📍 Endereço de entrega: ${order.enderecoEntrega}<br>
         `;
 
+        // Cria o botão de status
         const button = document.createElement("button");
         button.classList.add("btn", "btn-sm", "mt-2");
 
+        // Configura o botão de acordo com o status atual do pedido
         if (order.status === "Pendente") {
             button.textContent = "Preparando";
             button.classList.add("btn-warning");
-            button.onclick = () => updateOrderStatus(order.id, "Preparando");
+            button.onclick = () => updateOrderStatus(order.id, "Preparando", order.telefoneCliente);
             document.getElementById("received-orders").querySelector(".card-body").appendChild(orderEl);
         } else if (order.status === "Preparando") {
             button.textContent = "Concluído";
             button.classList.add("btn-success");
-            button.onclick = () => updateOrderStatus(order.id, "Concluído");
+            button.onclick = () => updateOrderStatus(order.id, "Concluído", order.telefoneCliente);
             document.getElementById("preparing-orders").querySelector(".card-body").appendChild(orderEl);
         } else if (order.status === "Concluído") {
-            const button = document.createElement("button");
-            // Adicione o botão "Saiu para a Entrega"
             button.textContent = "Saiu para a Entrega";
-            button.classList.add("btn", "btn-info");
-            button.onclick = () => {
-                updateOrderStatus(order.id, "Saiu para a Entrega");
-                notificarClienteWhatsApp(order.telefoneCliente, `Seu pedido #${order.id} saiu para entrega!`);
-            };
+            button.classList.add("btn-info");
+            button.onclick = () => updateOrderStatus(order.id, "Saiu para a Entrega", order.telefoneCliente);
             document.getElementById("completed-orders").querySelector(".card-body").appendChild(orderEl);
-            orderEl.appendChild(button);
         }
 
+        // Adiciona o botão ao elemento do pedido
         orderEl.appendChild(button);
     });
 }
 
+// Função para atualizar o status do pedido no Realtime Database e enviar notificação
+async function updateOrderStatus(orderId, newStatus, telefoneCliente) {
+    // Atualiza o status no Firebase
+    await db.ref("pedidos/" + orderId).update({ status: newStatus });
 
-// Função para atualizar o status do pedido no Realtime Database
-function updateOrderStatus(id, newStatus) {
-    db.ref("pedidos/" + id).update({
-        status: newStatus
-    });
+    // Define a mensagem com base no novo status
+    let mensagem;
+    if (newStatus === "Preparando") {
+        mensagem = `Seu pedido #${orderId} está sendo preparado!`;
+    } else if (newStatus === "Concluído") {
+        mensagem = `Seu pedido #${orderId} foi concluído!`;
+    } else if (newStatus === "Saiu para a Entrega") {
+        mensagem = `Seu pedido #${orderId} saiu para entrega!`;
+    }
+
+    // Envia a notificação via API
+    try {
+        const response = await fetch('http://127.0.0.1:3000/update-status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderId, status: newStatus, telefoneCliente, mensagem })
+        });
+        const data = await response.json();
+        console.log('Status atualizado e notificação enviada:', data);
+    } catch (error) {
+        console.error('Erro ao enviar notificação:', error);
+    }
 }
 
 // Chama a função para buscar os pedidos em tempo real
 document.addEventListener("DOMContentLoaded", function () {
     fetchOrders();
 });
-
