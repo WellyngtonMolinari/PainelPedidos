@@ -45,6 +45,8 @@ function renderOrders(orders) {
             #${order.id}<br>
             Lanche: <strong><ul>${order.itens.map(item => `<li>x${item.quantity} ${item.name}</li>`).join('')}</ul></strong><br>
             Total: R$ ${order.total}<br>
+            Método de Pagamento: ${order.metodoPagamento}<br>
+            ${order.metodoPagamento === 'Dinheiro' ? `${order.precisaTroco || 'Não precisa de troco'}` : ''}<br>
             Status: ${order.status}<br>
             Criado em: ${order.dataPedido}<br>
             📍 Endereço de entrega: ${order.enderecoEntrega}<br>
