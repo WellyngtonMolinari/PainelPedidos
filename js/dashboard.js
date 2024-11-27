@@ -264,18 +264,6 @@ async function updateChartsAndTables(period) {
     document.getElementById("totalOrders").textContent = filteredOrders.length;
 }
 
-// Configura os eventos de clique para os botões de filtro
-document.addEventListener("DOMContentLoaded", () => {
-    renderCharts(); // Renderiza os gráficos inicialmente com todos os dados
-
-    document.querySelectorAll(".filter-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            const period = button.getAttribute("data-period");
-            updateChartsAndTables(period); // Atualiza os gráficos e tabelas com base no filtro
-        });
-    });
-});
-
 // Funções auxiliares
 function groupOrdersByDate(orders) {
     return orders.reduce((acc, order) => {
