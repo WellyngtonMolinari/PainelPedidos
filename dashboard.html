@@ -22,6 +22,16 @@
         </nav>
         <main class="content">
             <h2 class="text-center mb-4">Dashboard de Vendas</h2>
+            
+            <!-- Filtros de Período -->
+            <div class="filters mb-4 text-center">
+                <button class="btn btn-primary filter-btn" data-period="today">Hoje</button>
+                <button class="btn btn-secondary filter-btn" data-period="week">Semana</button>
+                <button class="btn btn-info filter-btn" data-period="month">Mês</button>
+                <button class="btn btn-success filter-btn" data-period="year">Ano</button>
+            </div>
+
+            <!-- Gráficos -->
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -57,6 +67,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Resumo -->
+            <div class="summary mt-4">
+                <h4>Resumo</h4>
+                <p>Total de Vendas: <span id="totalSales">R$ 0,00</span></p>
+                <p>Total de Pedidos: <span id="totalOrders">0</span></p>
             </div>
         </main>
     </div>
