@@ -34,10 +34,9 @@ function renderOrders(orders) {
     document.getElementById("received-orders").querySelector(".card-body").innerHTML = "";
     document.getElementById("preparing-orders").querySelector(".card-body").innerHTML = "";
     document.getElementById("completed-orders").querySelector(".card-body").innerHTML = "";
+    document.getElementById("delivery-orders").querySelector(".card-body").innerHTML = ""; // Nova seção
 
     orders.forEach(order => {
-        console.log("Renderizando pedido:", order); // Log para verificar cada pedido
-        // Tabela do pedido
         const orderEl = document.createElement("div");
         orderEl.classList.add("order-item");
         orderEl.innerHTML = `
@@ -52,11 +51,9 @@ function renderOrders(orders) {
             📍 Endereço de entrega: ${order.enderecoEntrega}<br>
         `;
 
-        // Cria o botão de status
         const button = document.createElement("button");
         button.classList.add("btn", "btn-sm", "mt-2");
 
-        // Configura o botão de acordo com o status atual do pedido
         if (order.status === "Pendente") {
             button.textContent = "Preparando";
             button.classList.add("btn-warning");
@@ -72,9 +69,13 @@ function renderOrders(orders) {
             button.classList.add("btn-info");
             button.onclick = () => updateOrderStatus(order.id, "Saiu para a Entrega", order.telefoneCliente);
             document.getElementById("completed-orders").querySelector(".card-body").appendChild(orderEl);
+        } else if (order.status === "Saiu para a Entrega") {
+            button.textContent = "Entregue";
+            button.classList.add("btn-primary");
+            button.onclick = () => updateOrderStatus(order.id, "Entregue", order.telefoneCliente);
+            document.getElementById("delivery-orders").querySelector(".card-body").appendChild(orderEl);
         }
 
-        // Adiciona o botão ao elemento do pedido
         orderEl.appendChild(button);
     });
 }

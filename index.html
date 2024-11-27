@@ -9,30 +9,55 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Painel de Pedidos</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card received" id="received-orders">
-                    <div class="card-header text-center">Pedido Recebido</div>
-                    <div class="card-body">
-                        <!-- Pedidos Recebidos vão aparecer aqui -->
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="bg-dark text-white p-3" style="width: 250px; height: 100vh;">
+            <h4 class="text-center">Menu</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white">Painel de Pedidos</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" id="dashboard-link" class="nav-link text-white">Dashboard</a>
+                </li>
+                <!-- Adicione outros links aqui, se necessário -->
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Painel de Pedidos</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card received" id="received-orders">
+                        <div class="card-header text-center">Pedido Recebido</div>
+                        <div class="card-body">
+                            <!-- Pedidos Recebidos vão aparecer aqui -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card preparing" id="preparing-orders">
-                    <div class="card-header text-center">Preparando</div>
-                    <div class="card-body">
-                        <!-- Pedidos em Preparação vão aparecer aqui -->
+                <div class="col-md-3">
+                    <div class="card preparing" id="preparing-orders">
+                        <div class="card-header text-center">Preparando</div>
+                        <div class="card-body">
+                            <!-- Pedidos em Preparação vão aparecer aqui -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card completed" id="completed-orders">
-                    <div class="card-header text-center">Concluído/Saiu para Entrega</div>
-                    <div class="card-body">
-                        <!-- Pedidos Concluídos vão aparecer aqui -->
+                <div class="col-md-3">
+                    <div class="card completed" id="completed-orders">
+                        <div class="card-header text-center">Concluído</div>
+                        <div class="card-body">
+                            <!-- Pedidos Concluídos vão aparecer aqui -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card delivery" id="delivery-orders">
+                        <div class="card-header text-center">Saiu para Entrega</div>
+                        <div class="card-body">
+                            <!-- Pedidos que saíram para entrega vão aparecer aqui -->
+                        </div>
                     </div>
                 </div>
             </div>
