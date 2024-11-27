@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Vendas</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <h4>Menu</h4>
+            <ul>
+                <li><a href="index.html">Painel de Pedidos</a></li>
+                <li><a href="#" class="active">Dashboard</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <h2 class="text-center mb-4">Dashboard de Vendas</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="ordersChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <canvas id="topItemsChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+        <!-- Firebase SDK (v8) -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <!-- Dashboard JavaScript -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
