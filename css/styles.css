@@ -1,8 +1,107 @@
+/* Estilo base */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
 }
 
+/* Sidebar */
+nav {
+    background-color: #343a40; /* Cor principal da sidebar */
+    color: #ffffff; /* Cor do texto */
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+nav h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #495057;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    width: 100%;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    background-color: #495057; /* Destaque ao passar o mouse */
+    color: #f8f9fa;
+}
+
+nav ul li a.active {
+    background-color: #007bff; /* Cor para o item ativo */
+    color: #ffffff;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    nav {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1000;
+    }
+
+    nav.open {
+        transform: translateX(0);
+    }
+
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #343a40;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 20px;
+        z-index: 1100;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .menu-toggle:focus {
+        outline: none;
+    }
+}
+
+/* Ajustes do conteúdo principal */
+.container {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+    }
+}
+
+/* Cards e conteúdo */
 .card {
     border-radius: 8px;
     margin-bottom: 20px;
@@ -21,6 +120,11 @@ body {
 .completed .card-header {
     background-color: #d4edda;
     color: #155724;
+}
+
+.delivery .card-header {
+    background-color: #cce5ff;
+    color: #004085;
 }
 
 .order-item {
