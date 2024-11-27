@@ -31,16 +31,15 @@ function fetchDeliveredOrders() {
 // Corrige e formata datas no formato "DD/MM/YYYY, HH:mm:ss"
 function formatOrderDate(dateString) {
     try {
-        const [datePart, timePart] = dateString.split(", "); // Divide data e hora
-        const [day, month, year] = datePart.split("/").map(Number); // Divide dia, mês e ano
-        const [hours, minutes, seconds] = timePart.split(":").map(Number); // Divide horas, minutos e segundos
+        const [datePart, timePart] = dateString.split(", ");
+        const [day, month, year] = datePart.split("/").map(Number);
+        const [hours, minutes, seconds] = timePart.split(":").map(Number);
 
-        // Cria uma nova data com base no formato fornecido
         const formattedDate = new Date(year, month - 1, day, hours, minutes, seconds);
 
         if (isNaN(formattedDate)) throw new Error("Data inválida");
 
-        return formattedDate.toLocaleDateString("pt-BR"); // Formato dd/mm/aaaa
+        return formattedDate.toLocaleDateString("pt-BR");
     } catch (error) {
         console.error("Erro ao processar data:", dateString, error);
         return "Data Inválida";
@@ -51,10 +50,11 @@ function formatOrderDate(dateString) {
 async function renderCharts() {
     const orders = await fetchDeliveredOrders();
 
-    // Ajusta o cálculo de total de vendas (garantindo valores numéricos)
+    // Ajusta o cálculo de total de vendas
     const totalSales = orders.reduce((acc, order) => acc + parseFloat(order.total), 0);
     const ordersByDate = groupOrdersByDate(orders);
     const topItems = calculateTopItems(orders);
+    const paymentMethods = calculatePaymentMethods(orders);
 
     // Gráfico de Pedidos por Data
     const ordersChartCtx = document.getElementById("ordersChart").getContext("2d");
@@ -111,7 +111,28 @@ async function renderCharts() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Ajusta o tamanho do gráfico
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: "bottom" }
+            }
+        }
+    });
+
+    // Gráfico de Métodos de Pagamento
+    const paymentMethodsChartCtx = document.getElementById("paymentMethodsChart").getContext("2d");
+    new Chart(paymentMethodsChartCtx, {
+        type: "pie",
+        data: {
+            labels: Object.keys(paymentMethods),
+            datasets: [{
+                label: "Métodos de Pagamento",
+                data: Object.values(paymentMethods),
+                backgroundColor: ["#007bff", "#ffc107", "#28a745"]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { position: "bottom" }
             }
@@ -136,6 +157,14 @@ function calculateTopItems(orders) {
         });
     });
     return itemsCount;
+}
+
+function calculatePaymentMethods(orders) {
+    return orders.reduce((acc, order) => {
+        const method = order.metodoPagamento || "Indefinido";
+        acc[method] = (acc[method] || 0) + 1;
+        return acc;
+    }, {});
 }
 
 // Inicia os gráficos ao carregar a página

@@ -24,23 +24,46 @@
             <h2 class="text-center mb-4">Dashboard de Vendas</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <canvas id="ordersChart"></canvas>
+                    <div class="card">
+                        <div class="card-header text-center">Pedidos (Concluídos x Cancelados)</div>
+                        <div class="card-body">
+                            <canvas id="ordersChart"></canvas>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <canvas id="salesChart"></canvas>
+                    <div class="card">
+                        <div class="card-header text-center">Total de Vendas</div>
+                        <div class="card-body">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-md-12">
-                    <canvas id="topItemsChart"></canvas>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center">Produtos Mais Vendidos</div>
+                        <div class="card-body">
+                            <canvas id="topItemsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center">Métodos de Pagamento</div>
+                        <div class="card-body">
+                            <canvas id="paymentMethodsChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-        <!-- Firebase SDK (v8) -->
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Firebase SDK (v8) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <!-- Dashboard JavaScript -->
     <script src="js/dashboard.js"></script>
