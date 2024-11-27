@@ -28,15 +28,21 @@ function fetchDeliveredOrders() {
     });
 }
 
-// Corrige e formata datas
+// Corrige e formata datas no formato "DD/MM/YYYY, HH:mm:ss"
 function formatOrderDate(dateString) {
     try {
-        // Tenta criar uma data a partir do formato recebido
-        const date = new Date(dateString);
-        if (isNaN(date)) throw new Error(); // Data inválida
-        return date.toLocaleDateString(); // Retorna no formato dd/mm/aaaa
-    } catch {
-        console.error("Data inválida:", dateString);
+        const [datePart, timePart] = dateString.split(", "); // Divide data e hora
+        const [day, month, year] = datePart.split("/").map(Number); // Divide dia, mês e ano
+        const [hours, minutes, seconds] = timePart.split(":").map(Number); // Divide horas, minutos e segundos
+
+        // Cria uma nova data com base no formato fornecido
+        const formattedDate = new Date(year, month - 1, day, hours, minutes, seconds);
+
+        if (isNaN(formattedDate)) throw new Error("Data inválida");
+
+        return formattedDate.toLocaleDateString("pt-BR"); // Formato dd/mm/aaaa
+    } catch (error) {
+        console.error("Erro ao processar data:", dateString, error);
         return "Data Inválida";
     }
 }
@@ -45,8 +51,8 @@ function formatOrderDate(dateString) {
 async function renderCharts() {
     const orders = await fetchDeliveredOrders();
 
-    // Dados para os gráficos
-    const totalSales = orders.reduce((acc, order) => acc + (order.total || 0), 0);
+    // Ajusta o cálculo de total de vendas (garantindo valores numéricos)
+    const totalSales = orders.reduce((acc, order) => acc + parseFloat(order.total), 0);
     const ordersByDate = groupOrdersByDate(orders);
     const topItems = calculateTopItems(orders);
 

@@ -52,13 +52,14 @@ body {
     color: #ffffff;
 }
 
-/* Ajusta o tamanho do gráfico circular */
+/* Estilização para gráficos */
 canvas {
     max-height: 400px;
+    max-width: 100%; /* Garante responsividade */
 }
 
 #topItemsChart {
-    max-height: 300px; /* Específico para o gráfico de lanches mais vendidos */
+    max-height: 300px; /* Gráfico circular mais compacto */
 }
 
 
