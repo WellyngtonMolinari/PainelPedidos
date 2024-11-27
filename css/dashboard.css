@@ -76,6 +76,41 @@ canvas {
     transition: margin-left 0.3s ease-in-out;
 }
 
+/* Resumo estilizado */
+.summary {
+    margin-bottom: 20px;
+}
+
+.summary .card {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary .card-body {
+    padding: 20px;
+}
+
+.summary .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+.summary p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.summary .text-success {
+    color: #28a745 !important;
+}
+
+.summary .text-primary {
+    color: #007bff !important;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;

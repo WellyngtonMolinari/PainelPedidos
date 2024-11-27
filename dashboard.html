@@ -22,7 +22,7 @@
         </nav>
         <main class="content">
             <h2 class="text-center mb-4">Dashboard de Vendas</h2>
-            
+        
             <!-- Filtros de Período -->
             <div class="filters mb-4 text-center">
                 <button class="btn btn-primary filter-btn" data-period="today">Hoje</button>
@@ -31,6 +31,25 @@
                 <button class="btn btn-success filter-btn" data-period="year">Ano</button>
             </div>
 
+            <!-- Resumo -->
+            <div class="summary mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Resumo</h4>
+                        <div class="d-flex justify-content-around mt-3">
+                            <div>
+                                <h5>Total de Vendas</h5>
+                                <p class="display-6 text-success" id="totalSales">R$ 0,00</p>
+                            </div>
+                            <div>
+                                <h5>Total de Pedidos</h5>
+                                <p class="display-6 text-primary" id="totalOrders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
             <!-- Gráficos -->
             <div class="row">
                 <div class="col-md-6">
@@ -68,14 +87,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Resumo -->
-            <div class="summary mt-4">
-                <h4>Resumo</h4>
-                <p>Total de Vendas: <span id="totalSales">R$ 0,00</span></p>
-                <p>Total de Pedidos: <span id="totalOrders">0</span></p>
-            </div>
-        </main>
+        </main>        
     </div>
 
     <!-- Firebase SDK (v8) -->
