@@ -1,17 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.createElement("button");
-    toggleButton.classList.add("menu-toggle");
-    toggleButton.textContent = "☰";
-    document.body.appendChild(toggleButton);
-
-    const sidebar = document.querySelector("nav");
-
-    toggleButton.addEventListener("click", function () {
-        sidebar.classList.toggle("open");
-    });
-});
-
-
 // Configuração do Firebase (substitua com suas credenciais)
 const firebaseConfig = {
     apiKey: "AIzaSyA-PoA257z0eYL5v25lCWZw5hT_8wmlJXw",
