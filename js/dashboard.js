@@ -267,19 +267,58 @@ function calculateTopItems(orders) {
     return itemsCount;
 }
 
-// Inicializa os gráficos ao carregar a página
+// Atualiza o texto do resumo com base no período
+function updateSummaryTitle(period) {
+    const summaryTitle = document.getElementById("summaryPeriod");
+    let periodText = "";
+
+    switch (period) {
+        case "today":
+            periodText = "(Hoje)";
+            break;
+        case "week":
+            periodText = "(da Semana)";
+            break;
+        case "month":
+            periodText = "(do Mês)";
+            break;
+        case "year":
+            periodText = "(do Ano)";
+            break;
+        default:
+            periodText = "(de Todos os Tempos)";
+    }
+
+    summaryTitle.textContent = periodText;
+}
+
+// Inicia os gráficos ao carregar a página
 document.addEventListener("DOMContentLoaded", async () => {
     const orders = await fetchDeliveredOrders();
-    await renderCharts(orders); // Renderiza os gráficos inicialmente com todos os dados
+    await renderCharts(orders);
 
-    // Atualiza os gráficos para o período "Hoje" ao carregar a página
+    // Define o período padrão como "Hoje"
     updateChartsAndTables("today");
+    updateSummaryTitle("today");
+
+    // Adiciona a classe "active" ao botão "Hoje"
+    const todayButton = document.querySelector('[data-period="today"]');
+    if (todayButton) {
+        todayButton.classList.add("active");
+    }
 
     // Configura eventos de clique nos botões de filtro
     document.querySelectorAll(".filter-btn").forEach(button => {
         button.addEventListener("click", () => {
             const period = button.getAttribute("data-period");
+
+            // Atualiza gráficos e título do resumo
             updateChartsAndTables(period);
+            updateSummaryTitle(period);
+
+            // Atualiza o estado visual dos botões
+            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
         });
     });
 });
