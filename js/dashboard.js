@@ -28,22 +28,11 @@ function fetchDeliveredOrders() {
     });
 }
 
-// Corrige e formata datas no formato "DD/MM/YYYY, HH:mm:ss"
-function formatOrderDate(dateString) {
-    try {
-        const [datePart, timePart] = dateString.split(", ");
-        const [day, month, year] = datePart.split("/").map(Number);
-        const [hours, minutes, seconds] = timePart.split(":").map(Number);
-
-        const formattedDate = new Date(year, month - 1, day, hours, minutes, seconds);
-
-        if (isNaN(formattedDate)) throw new Error("Data inválida");
-
-        return formattedDate.toLocaleDateString("pt-BR");
-    } catch (error) {
-        console.error("Erro ao processar data:", dateString, error);
-        return "Data Inválida";
-    }
+// Função para analisar a data do pedido
+function parseOrderDate(dateString) {
+    const [datePart] = dateString.split(", "); // Ignora o horário
+    const [today, month, year] = datePart.split("/").map(Number);
+    return new Date(year, month - 1, today);
 }
 
 // Variáveis globais para armazenar instâncias dos gráficos
@@ -52,11 +41,6 @@ let ordersChart, salesChart, topItemsChart, paymentMethodsChart;
 // Renderiza gráficos
 async function renderCharts(filteredOrders) {
     const orders = filteredOrders || await fetchDeliveredOrders();
-
-    if (!Array.isArray(orders)) {
-        console.error("Os dados de pedidos não são uma lista válida:", orders);
-        return;
-    }
 
     const ordersByDate = groupOrdersByDate(orders);
     const totalSales = orders.reduce((acc, order) => acc + parseFloat(order.total || 0), 0);
@@ -97,7 +81,7 @@ async function renderCharts(filteredOrders) {
             labels: Object.keys(ordersByDate),
             datasets: [{
                 label: "Total de Vendas (R$)",
-                data: Object.keys(ordersByDate).map(date => ordersByDate[date]),
+                data: Object.values(ordersByDate).map(date => totalSales),
                 borderColor: "#28a745",
                 fill: false
             }]
@@ -165,8 +149,8 @@ function calculatePaymentMethods(orders) {
 function filterOrdersByPeriod(orders, period) {
     const now = new Date();
     return orders.filter(order => {
-        const orderDate = new Date(order.dataPedido.split(", ")[0].split("/").reverse().join("-"));
-        if (period === "day") {
+        const orderDate = parseOrderDate(order.dataPedido);
+        if (period === "today") {
             return orderDate.toDateString() === now.toDateString();
         } else if (period === "week") {
             const startOfWeek = new Date(now);
@@ -195,7 +179,7 @@ async function updateChartsAndTables(period) {
     const ordersByDate = groupOrdersByDate(filteredOrders);
     const salesByDate = {};
     filteredOrders.forEach(order => {
-        const date = formatOrderDate(order.dataPedido);
+        const date = parseOrderDate(order.dataPedido);
         salesByDate[date] = (salesByDate[date] || 0) + parseFloat(order.total || 0);
     });
 
@@ -242,7 +226,7 @@ async function updateChartsAndTables(period) {
     salesChart.data.labels = Object.keys(ordersByDate);
     const salesByDate = {};
     filteredOrders.forEach(order => {
-        const date = formatOrderDate(order.dataPedido);
+        const date = parseOrderDate(order.dataPedido);
         salesByDate[date] = (salesByDate[date] || 0) + parseFloat(order.total || 0);
     });
     salesChart.data.datasets[0].data = Object.values(salesByDate);
@@ -267,7 +251,7 @@ async function updateChartsAndTables(period) {
 // Funções auxiliares
 function groupOrdersByDate(orders) {
     return orders.reduce((acc, order) => {
-        const date = formatOrderDate(order.dataPedido);
+        const date = parseOrderDate(order.dataPedido).toLocaleDateString("pt-BR");
         acc[date] = (acc[date] || 0) + 1;
         return acc;
     }, {});
@@ -283,7 +267,7 @@ function calculateTopItems(orders) {
     return itemsCount;
 }
 
-// Inicia os gráficos ao carregar a página
+// Inicializa os gráficos ao carregar a página
 document.addEventListener("DOMContentLoaded", async () => {
     const orders = await fetchDeliveredOrders();
     await renderCharts(orders); // Renderiza os gráficos inicialmente com todos os dados
@@ -299,4 +283,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 });
-
