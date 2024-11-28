@@ -41,9 +41,19 @@ body {
 
 /* Ajustes do conteúdo principal */
 .container {
-    margin-left: 250px;
+    flex: 1; /* Faz com que ocupe o restante da altura */
+ 
+    padding: 20px;
+    box-sizing: border-box;
     transition: margin-left 0.3s ease-in-out;
 }
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0; /* Remove margem quando menu está oculto */
+    }
+}
+
 
 @media (max-width: 768px) {
     .container {

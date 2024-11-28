@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <body>
-    <div class="d-flex">
+    <div class="dashboard-container">
         <button id="menu-toggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
         <nav class="sidebar">
             <h4>Menu</h4>
@@ -24,44 +24,46 @@
                 <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i>Resultados</a></li>
             </ul>
         </nav>
-        <!-- Conteúdo Principal -->
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">Painel de Pedidos</h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card received" id="received-orders">
-                        <div class="card-header text-center">Pedido Recebido</div>
-                        <div class="card-body">
-                            <!-- Pedidos Recebidos vão aparecer aqui -->
+        <main class="content">
+            <!-- Conteúdo Principal -->
+            <div class="container mt-5">
+                <h2 class="text-center mb-4">Painel de Pedidos</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card received" id="received-orders">
+                            <div class="card-header text-center">Pedido Recebido</div>
+                            <div class="card-body">
+                                <!-- Pedidos Recebidos vão aparecer aqui -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card preparing" id="preparing-orders">
-                        <div class="card-header text-center">Preparando</div>
-                        <div class="card-body">
-                            <!-- Pedidos em Preparação vão aparecer aqui -->
+                    <div class="col-md-3">
+                        <div class="card preparing" id="preparing-orders">
+                            <div class="card-header text-center">Preparando</div>
+                            <div class="card-body">
+                                <!-- Pedidos em Preparação vão aparecer aqui -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card completed" id="completed-orders">
-                        <div class="card-header text-center">Concluído</div>
-                        <div class="card-body">
-                            <!-- Pedidos Concluídos vão aparecer aqui -->
+                    <div class="col-md-3">
+                        <div class="card completed" id="completed-orders">
+                            <div class="card-header text-center">Concluído</div>
+                            <div class="card-body">
+                                <!-- Pedidos Concluídos vão aparecer aqui -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card delivery" id="delivery-orders">
-                        <div class="card-header text-center">Saiu para Entrega</div>
-                        <div class="card-body">
-                            <!-- Pedidos que saíram para entrega vão aparecer aqui -->
+                    <div class="col-md-3">
+                        <div class="card delivery" id="delivery-orders">
+                            <div class="card-header text-center">Saiu para Entrega</div>
+                            <div class="card-body">
+                                <!-- Pedidos que saíram para entrega vão aparecer aqui -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <!-- Firebase SDK (v8) -->
