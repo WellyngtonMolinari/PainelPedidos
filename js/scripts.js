@@ -41,8 +41,8 @@ function renderOrders(orders) {
         orderEl.classList.add("order-item");
         orderEl.innerHTML = `
             Cliente: <strong>${order.clienteId}</strong><br>
-            #${order.id}<br>
-            Lanche: <strong><ul>${order.itens.map(item => `<li>x${item.quantity} ${item.name}</li>`).join('')}</ul></strong><br>
+            #${order.id}<br><br>
+            <strong><ul>${order.itens.map(item => `<li>x${item.quantity} ${item.name}</li>`).join('')}</ul></strong><br>
             Total: R$ ${order.total}<br>
             Método de Pagamento: ${order.metodoPagamento}<br>
             ${order.metodoPagamento === 'Dinheiro' ? `${order.precisaTroco || 'Não precisa de troco'}` : ''}<br>
