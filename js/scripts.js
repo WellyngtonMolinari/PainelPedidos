@@ -42,7 +42,7 @@ function renderOrders(orders) {
         orderEl.innerHTML = `
             Cliente: <strong>${order.clienteId}</strong><br>
             #${order.id}<br><br>
-            <strong><ul>${order.itens.map(item => `<li>x${item.quantity} ${item.name}</li>`).join('')}</ul></strong><br>
+            <strong> ${order.itens.map(item => ` x${item.quantity} ${item.name} `).join('')} </strong><br>
             Total: R$ ${order.total}<br>
             Método de Pagamento: ${order.metodoPagamento}<br>
             ${order.metodoPagamento === 'Dinheiro' ? `${order.precisaTroco || 'Não precisa de troco'}` : ''}<br>
