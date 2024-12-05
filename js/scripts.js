@@ -44,7 +44,7 @@ function renderOrders(orders) {
             #${order.id}<br><br>
             <strong> ${order.itens.map(item => ` x${item.quantity} ${item.name} `).join('')} </strong><br>
             Total: R$ ${order.total}<br>
-            Método de Pagamento: ${order.metodoPagamento}<br>
+            Pagamento: ${order.metodoPagamento}<br>
             ${order.metodoPagamento === 'Dinheiro' ? `${order.precisaTroco || 'Não precisa de troco'}` : ''}<br>
             Status: ${order.status}<br>
             Criado em: ${order.dataPedido}<br>
